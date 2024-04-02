@@ -1,0 +1,64 @@
+.container {
+  width: 405px;
+  display: flex;
+  margin: auto;
+
+}
+
+.tags-wrapper {
+  display: flex;
+  gap: 3px;
+  width: 100%;
+  align-content: center;
+  margin-top: 100px;
+  flex-wrap: wrap;
+  padding: 3px;
+  border: solid 1px rgba(234, 234, 235, 1);
+  border-radius: 12px;
+}
+
+.tag-bubble {
+  display: flex;
+  position: relative;
+  background-color: rgba(242, 242, 244, 1);
+  color: rgba(38, 38, 38, 1);
+  height: 32px;
+  border-radius: 8px;
+  font-family: 'Inter';
+  font-weight: 500;
+  font-size: 14px;
+  padding: 0 29px 0 11px;
+  text-align: left;
+  align-items: center;
+}
+
+.tag-bubble:hover {
+  cursor: pointer;
+  background-color: rgba(229, 230, 232, 1);
+}
+
+.tag-bubble::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background-image: url(/Cross.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  position: absolute;
+  right: 11px;
+}
+
+.tag-bubble::after:hover {
+
+}
+
+.input {
+  height: 32px;
+  border: none;
+  margin: 0;
+  padding: 0 11px;
+  outline: none;
+  background-color: coral;
+}

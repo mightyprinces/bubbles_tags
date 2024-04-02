@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bubbles</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <script src="bubbles.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <div class="tags-wrapper">
+      <div class="tag-bubble">Bubble 11111</div>
+      <div class="tag-bubble">Bubble 2</div>
+      <div class="tag-bubble">Bubble 3</div>
+      <div class="tag-bubble">Bubble 4</div>
+      <div class="tag-bubble">Bubble 555</div>
+      <input class="input" type="text" placeholder="Search request">
+    </div>
+  </div>
+
+  <div class="bubbles_wrapper--first"></div>
+  <div class="bubbles_wrapper--second"></div>
+
+  <script>
+    const bubblesFirstWrapperEl = document.querySelector('.bubbles_wrapper--first');
+    const bubblesSecondWrapperEl = document.querySelector('.bubbles_wrapper--second');
+
+    const bubblesFirst = new Bubbles(bubblesFirstWrapperEl);
+    const bubblesSecond = new Bubbles(bubblesSecondWrapperEl);
+
+    // лиснеры на событие change должны стрелять когда мы добавляем или удаляем тег
+    bubblesFirst.addEventListener('change', (ev) => {
+      console.log('First:', ev.detail); // First: ['first tag', 'second tag', ...]
+    });
+    bubblesSecond.addEventListener('change', (ev) => {
+      console.log('Second', ev.detail); // Second: ['first tag', 'second tag', ...]
+    });
+  </script>
+
+</body>
+
+</html>
