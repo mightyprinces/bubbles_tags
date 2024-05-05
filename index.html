@@ -16,33 +16,28 @@
 
 <body>
   <div class="container">
-    <div class="tags-wrapper">
-      <div class="tag-bubble">Bubble 11111</div>
-      <div class="tag-bubble">Bubble 2</div>
-      <div class="tag-bubble">Bubble 3</div>
-      <div class="tag-bubble">Bubble 4</div>
-      <div class="tag-bubble">Bubble 555</div>
+    <!-- <div class="tags-wrapper">
+      <div class="tag-bubble">Bubble 1111122<span class="remove-tag">&#10006;</span></div>
+      <div class="tag-bubble">Bubble 2<span class="remove-tag">&#10006;</span></div>
+      <div class="tag-bubble">Bubble 3<span class="remove-tag">&#10006;</span></div>
+      <div class="tag-bubble">Bubble 4<span class="remove-tag">&#10006;</span></div>
+      <div class="tag-bubble">Bubble 555<span class="remove-tag">&#10006;</span></div>
       <input class="input" type="text" placeholder="Search request">
-    </div>
+    </div> -->
+
+    <div class="bubbles_wrapper--first"></div>
   </div>
 
-  <div class="bubbles_wrapper--first"></div>
-  <div class="bubbles_wrapper--second"></div>
 
   <script>
     const bubblesFirstWrapperEl = document.querySelector('.bubbles_wrapper--first');
-    const bubblesSecondWrapperEl = document.querySelector('.bubbles_wrapper--second');
+    // хендлер должен запускаться когда мы добавляем или удаляем тег
+    function tagsChangedHandler(data) {
+      console.log('Something changed:', data);
+    }
 
-    const bubblesFirst = new Bubbles(bubblesFirstWrapperEl);
-    const bubblesSecond = new Bubbles(bubblesSecondWrapperEl);
-
-    // лиснеры на событие change должны стрелять когда мы добавляем или удаляем тег
-    bubblesFirst.addEventListener('change', (ev) => {
-      console.log('First:', ev.detail); // First: ['first tag', 'second tag', ...]
-    });
-    bubblesSecond.addEventListener('change', (ev) => {
-      console.log('Second', ev.detail); // Second: ['first tag', 'second tag', ...]
-    });
+    const bubblesFirst = new Bubbles(bubblesFirstWrapperEl, tagsChangedHandler);
+    bubblesFirst.addTag('555');
   </script>
 
 </body>
