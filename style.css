@@ -49,22 +49,18 @@
 
 .remove-tag {
   display: flex;
-  align-content: center;
-  justify-content: center;
-  background-image: url('./Cross.svg');
-  background-repeat: no-repeat;
-  background-position: center;
+  background: url('./Cross.svg') no-repeat center;
   border-radius: 6px;
   width: 20px;
   height: 20px;
-  color: rgba(191, 191, 191, 1);
   margin-left: 4px;
   cursor: pointer;
+  opacity: 0.5;
   transition: all 0.2s;
 }
 .remove-tag:hover {
   background-color: rgba(229, 230, 232, 1);
-  color: rgba(140, 140, 140, 1);
+  opacity: 1;
 }
 
 .input {

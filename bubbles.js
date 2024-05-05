@@ -32,7 +32,6 @@ class Bubbles {
     })
     // tagInputEl.focus();
     this.tagsAndInputWrapperEl.appendChild(tagInputEl);
-
     wrapperEl.appendChild(this.tagsAndInputWrapperEl);
   }
 
@@ -40,9 +39,7 @@ class Bubbles {
    * Удаляет тег из баблса при клике на тег
    */
   removeTag(tagEl) {
-    console.log('remove');
     this.tagsWrapperEl.removeChild(tagEl);
-    
     this.tags.splice(this.tags.indexOf(tagEl.textContent), 1);
     this.tagsChangedHandler(this.tags);
   }
@@ -66,9 +63,7 @@ class Bubbles {
     const removeEl = document.createElement('span');
     removeEl.classList.add('remove-tag');
 
-    removeEl.addEventListener('click', (ev) => {
-      ev.preventDefault();
-      console.log(ev);
+    removeEl.addEventListener('click', () => {
       this.removeTag(tagEl);
     })
 
