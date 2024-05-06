@@ -31,12 +31,18 @@
   flex-wrap: wrap;
 }
 
+.tag-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .tag-bubble {
   display: flex;
-  position: relative;
   background-color: rgba(242, 242, 244, 1);
   color: rgba(38, 38, 38, 1);
   height: 32px;
+  max-width: 150px;
   border-radius: 8px;
   font-family: 'Inter';
   font-weight: 500;
@@ -72,7 +78,7 @@
   width: 110px;
   border: none;
   margin: 0;
-  padding: 0 11px;
+  padding: 0 8px;
   outline: none;
   /* background-color: rgb(246, 246, 246); */
 }
@@ -82,3 +88,10 @@
   font-size: 14px;
   color: rgba(38, 38, 38, 1);
 }
+
+/* .test {
+  background-color: aquamarine;
+  min-width: 110px;
+  display: flex;
+  flex-grow: 1;
+} */
