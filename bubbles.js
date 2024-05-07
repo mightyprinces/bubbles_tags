@@ -3,19 +3,14 @@ class Bubbles {
     this.tags = []; // массив текущих тегов
     this.tagsChangedHandler = tagsChangedHandler;
     this.createLayout(wrapperEl); // код запускающий createLayout. wrapperEl в данном случае это bubblesFirstWrapperEl из index.html
-    // this.addTag('test');
   }
 
   /**
    * Создает разметку баблса и вставляет её в переданный враппер
    */
   createLayout(wrapperEl) { //wrapperEl в данном случае это bubblesFirstWrapperEl из index.html
-    // код, создающий разметку
     this.tagsAndInputWrapperEl = document.createElement('div');
     this.tagsAndInputWrapperEl.classList.add('tags-and-input-wrapper');
-    this.tagsWrapperEl = document.createElement('div');
-    this.tagsWrapperEl.classList.add('tags-wrapper');
-    this.tagsAndInputWrapperEl.appendChild(this.tagsWrapperEl);
     
     const tagInputEl = document.createElement('input');
     tagInputEl.classList.add('input');
@@ -29,12 +24,6 @@ class Bubbles {
     })
     
     this.tagsAndInputWrapperEl.appendChild(tagInputEl);
-
-    this.tagsAndInputWrapperEl.addEventListener('click', (ev) => {
-      console.log(ev);
-      if (ev.target === this.tagsAndInputWrapperEl) tagInputEl.focus();
-    })
-
     wrapperEl.appendChild(this.tagsAndInputWrapperEl);
   }
 
@@ -42,7 +31,7 @@ class Bubbles {
    * Удаляет тег из баблса при клике на тег
    */
   removeTag(tagEl) {
-    this.tagsWrapperEl.removeChild(tagEl);
+    this.tagsAndInputWrapperEl.removeChild(tagEl);
     this.tags.splice(this.tags.indexOf(tagEl.textContent), 1);
     this.tagsChangedHandler(this.tags);
   }
@@ -52,7 +41,7 @@ class Bubbles {
    */
   addTag(tagValue) {
     if (
-      !this.tagsWrapperEl  // проверка что tagsWrapperEl существует
+      !this.tagsAndInputWrapperEl  // проверка что tagsAndInputWrapperEl существует
       || tagValue === ''   // и что мы не создаем пустой тэг, так как value инпута не пустой
       || this.tags.includes(tagValue)
       || tagValue.trim() === ''
@@ -73,7 +62,9 @@ class Bubbles {
     })
 
     tagEl.appendChild(removeEl);
-    this.tagsWrapperEl.appendChild(tagEl);
+    
+    // this.tagsAndInputWrapperEl.insertBefore(tagEl, document.querySelector('input'));
+    this.tagsAndInputWrapperEl.insertBefore(tagEl, this.tagsAndInputWrapperEl.lastChild);
     this.tags.push(value);
     this.tagsChangedHandler(this.tags);
   }

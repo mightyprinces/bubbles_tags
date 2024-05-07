@@ -24,13 +24,6 @@
   border-radius: 12px;
 }
 
-.tags-wrapper {
-  display: flex;
-  gap: 3px;
-  align-content: center;
-  flex-wrap: wrap;
-}
-
 .tag-text {
   overflow: hidden;
   white-space: nowrap;
@@ -80,7 +73,7 @@
   margin: 0;
   padding: 0 8px;
   outline: none;
-  /* background-color: rgb(246, 246, 246); */
+  flex-grow: 1;
 }
 .input::placeholder {
   font-family: 'Inter';
@@ -88,10 +81,3 @@
   font-size: 14px;
   color: rgba(38, 38, 38, 1);
 }
-
-/* .test {
-  background-color: aquamarine;
-  min-width: 110px;
-  display: flex;
-  flex-grow: 1;
-} */
