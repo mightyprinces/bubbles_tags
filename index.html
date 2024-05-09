@@ -28,8 +28,8 @@
     function tagsChangedHandler(data) {
       console.log('Something changed:', data);
     }
-
-    const bubblesFirst = new Bubbles(bubblesFirstWrapperEl, tagsChangedHandler);
+    let initTagsArr = ['Hello', 'World'];
+    const bubblesFirst = new Bubbles(bubblesFirstWrapperEl, tagsChangedHandler, initTagsArr);
   </script>
 
 </body>

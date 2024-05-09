@@ -1,5 +1,5 @@
 class Bubbles {
-  constructor(wrapperEl, tagsChangedHandler) { // wrapperEl в данном случае это bubblesFirstWrapperEl из index.html
+  constructor(wrapperEl, tagsChangedHandler, initTagsArr) { // wrapperEl в данном случае это bubblesFirstWrapperEl из index.html
     this.tags = []; // массив текущих тегов
     this.tagsChangedHandler = tagsChangedHandler;
     this.createLayout(wrapperEl); // код запускающий createLayout. wrapperEl в данном случае это bubblesFirstWrapperEl из index.html
@@ -25,6 +25,10 @@ class Bubbles {
     
     this.tagsAndInputWrapperEl.appendChild(tagInputEl);
     wrapperEl.appendChild(this.tagsAndInputWrapperEl);
+
+    for (let tag of initTagsArr) {
+      this.addTag(tag);
+    }
   }
 
   /**
