@@ -48,6 +48,7 @@
 
 .remove-tag {
   display: flex;
+  flex-shrink: 0;
   background: url('./Cross.svg') no-repeat center;
   border-radius: 6px;
   width: 20px;

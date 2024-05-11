@@ -1,8 +1,10 @@
 class Bubbles {
   constructor(wrapperEl, tagsChangedHandler, initTagsArr) { // wrapperEl в данном случае это bubblesFirstWrapperEl из index.html
+    this.isReady = false;
     this.tags = []; // массив текущих тегов
     this.tagsChangedHandler = tagsChangedHandler;
     this.createLayout(wrapperEl); // код запускающий createLayout. wrapperEl в данном случае это bubblesFirstWrapperEl из index.html
+    this.isReady = true;
   }
 
   /**
@@ -16,7 +18,7 @@ class Bubbles {
     tagInputEl.classList.add('input');
     tagInputEl.setAttribute('placeholder', 'Search request');
     tagInputEl.value = '';
-    tagInputEl.addEventListener('keypress', (ev) => {
+    tagInputEl.addEventListener('keydown', (ev) => {
       if (ev.key === "Enter") {
         this.addTag(tagInputEl.value);
         tagInputEl.value = '';
@@ -44,19 +46,18 @@ class Bubbles {
    * Добавляет тег в баблс при нажатии Enter в непустом инпуте
    */
   addTag(tagValue) {
+    tagValue = tagValue.trim();
     if (
       !this.tagsAndInputWrapperEl  // проверка что tagsAndInputWrapperEl существует
-      || tagValue === ''   // и что мы не создаем пустой тэг, так как value инпута не пустой
+      || tagValue === ''   // и что мы не создаем пустой тэг, так как tagValue инпута не пустой
       || this.tags.includes(tagValue)
-      || tagValue.trim() === ''
     ) return;
     
-    const value = tagValue.trim();
     const tagEl = document.createElement('div');
     tagEl.classList.add('tag-bubble');
     const tagTextEl = document.createElement('div');
     tagTextEl.classList.add('tag-text');
-    tagTextEl.textContent = value;
+    tagTextEl.textContent = tagValue;
     tagEl.appendChild(tagTextEl);
 
     const removeEl = document.createElement('span');
@@ -64,12 +65,10 @@ class Bubbles {
     removeEl.addEventListener('click', () => {
       this.removeTag(tagEl);
     })
-
     tagEl.appendChild(removeEl);
-    
-    // this.tagsAndInputWrapperEl.insertBefore(tagEl, document.querySelector('input'));
     this.tagsAndInputWrapperEl.insertBefore(tagEl, this.tagsAndInputWrapperEl.lastChild);
-    this.tags.push(value);
-    this.tagsChangedHandler(this.tags);
+    this.tags.push(tagValue);
+
+    if (this.isReady) this.tagsChangedHandler(this.tags);
   }
 }
