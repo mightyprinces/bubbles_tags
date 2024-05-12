@@ -23,6 +23,13 @@ class Bubbles {
         this.addTag(tagInputEl.value);
         tagInputEl.value = '';
       }
+
+      if (ev.key === "Backspace") {
+        if (ev.repeat) { return }
+        if (tagInputEl.value === '' && this.tagsAndInputWrapperEl.firstChild !== tagInputEl) { // проверка что инпут пустой и что во врапере есть элементы кроме инпута, то есть теги
+          this.removeTag(this.tagsAndInputWrapperEl.lastChild.previousElementSibling);
+        }
+      }
     })
     
     this.tagsAndInputWrapperEl.appendChild(tagInputEl);
