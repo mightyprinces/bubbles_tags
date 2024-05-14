@@ -1,16 +1,16 @@
-class Bubbles {
+export default class Bubbles {
   constructor(wrapperEl, tagsChangedHandler, initTagsArr) { // wrapperEl в данном случае это bubblesFirstWrapperEl из index.html
     this.isReady = false;
     this.tags = []; // массив текущих тегов
     this.tagsChangedHandler = tagsChangedHandler;
-    this.createLayout(wrapperEl); // код запускающий createLayout. wrapperEl в данном случае это bubblesFirstWrapperEl из index.html
+    this.createLayout(wrapperEl, initTagsArr); // код запускающий createLayout. wrapperEl в данном случае это bubblesFirstWrapperEl из index.html
     this.isReady = true;
   }
 
   /**
    * Создает разметку баблса и вставляет её в переданный враппер
    */
-  createLayout(wrapperEl) { //wrapperEl в данном случае это bubblesFirstWrapperEl из index.html
+  createLayout(wrapperEl, initTagsArr) { //wrapperEl в данном случае это bubblesFirstWrapperEl из index.html
     this.tagsAndInputWrapperEl = document.createElement('div');
     this.tagsAndInputWrapperEl.classList.add('tags-and-input-wrapper');
     
