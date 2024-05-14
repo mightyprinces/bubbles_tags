@@ -6,32 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bubbles</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <script src="bubbles.js"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="modulepreload" href="/js/lib/bubbles.js">
+  <link rel="modulepreload" href="/js/lib/storage.js">
 </head>
 
 <body>
   <div class="container">
-    <div class="bubbles_wrapper--first">
-      <!-- <div class="test">sjchbzlsjvhbsvj,dbsv.jbv</div>  -->
-    </div>
+    <div class="bubbles_wrapper--first"></div>
   </div>
 
-
-  <script>
-    const bubblesFirstWrapperEl = document.querySelector('.bubbles_wrapper--first');
-    // хендлер должен запускаться когда мы добавляем или удаляем тег
-    function tagsChangedHandler(data) {
-      console.log('Something changed:', data);
-    }
-    let initTagsArr = ['Hello', 'World', 'a', 'b', 'c', 'd', 'e', 'f',];
-    const bubblesFirst = new Bubbles(bubblesFirstWrapperEl, tagsChangedHandler, initTagsArr);
-  </script>
-
+  <script src="/js/page.js" type="module"></script>
 </body>
 
 </html>
