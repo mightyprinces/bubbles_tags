@@ -1,5 +1,5 @@
-import Bubbles from '/js/lib/bubbles.js';
-import Storage from '/js/lib/storage.js';
+import Bubbles from './lib/bubbles.js';
+import Storage from './lib/storage.js';
 
 class Page {
   static init() {
