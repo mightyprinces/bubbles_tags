@@ -55,7 +55,7 @@ export default class Bubbles {
     tagInputEl.addEventListener('focus', (ev) => {
       console.log('FOCUS');
       if (this.deletedTags.length) {
-        this.tagsAndInputWrapperEl.classList.add('focused');
+        this.tagsAndInputWrapperEl.classList.add('dropdowned');
         this.dropdownEl.classList.remove('hide');
       }
     })
@@ -64,7 +64,7 @@ export default class Bubbles {
     window.addEventListener('click', (ev) => {
       console.log('CLICK');
       if (ev.target !== this.dropdownEl && !this.dropdownEl.contains(ev.target) && ev.target !== tagInputEl) {
-        this.tagsAndInputWrapperEl.classList.remove('focused');
+        this.tagsAndInputWrapperEl.classList.remove('dropdowned');
         this.dropdownEl.classList.add('hide');
       }
     })
@@ -143,6 +143,11 @@ export default class Bubbles {
     let allElements = [...this.dropdownEl.querySelectorAll('.dropdown_item')];
     for (let delTagEl of allElements) {
       if (delTagEl.innerText === tagValue) this.dropdownEl.removeChild(delTagEl);
+    }
+
+    if (!this.dropdownEl.hasChildNodes()) {
+      this.dropdownEl.classList.add('hide');
+      this.tagsAndInputWrapperEl.classList.remove('dropdowned');
     }
   }
 }

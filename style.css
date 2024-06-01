@@ -50,7 +50,7 @@ li {
   border-radius: var(--border-radius);
 }
 
-.tags-and-input-wrapper.focused {
+.tags-and-input-wrapper.dropdowned {
   border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
