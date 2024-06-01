@@ -1,3 +1,28 @@
+:root {
+  --light-grey-A: rgba(242, 242, 244, 1);
+  --light-grey-B: rgba(234, 234, 235, 1);
+  --dark-grey-A: rgba(38, 38, 38, 1);
+  --border-radius: 12px;
+  --border-radius-S: 8px;
+  --color-accent-light: #FFF6E5;
+}
+
+body {
+  font-family: 'Inter';
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--dark-grey-A);
+}
+
+ul {
+  margin: 0;
+  padding-right: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
 /* Стили относящиеся к странице */
 .container {
   width: 405px;
@@ -9,6 +34,7 @@
 
 .bubbles_wrapper--first {
   margin-top: 80px;
+  position: relative;
 }
 
 
@@ -20,8 +46,12 @@
   align-content: center;
   flex-wrap: wrap;
   padding: 3px;
-  border: solid 1px rgba(234, 234, 235, 1);
-  border-radius: 12px;
+  border: solid 1px var(--light-grey-B);
+  border-radius: var(--border-radius);
+}
+
+.tags-and-input-wrapper.focused {
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
 .tag-text {
@@ -32,14 +62,11 @@
 
 .tag-bubble {
   display: flex;
-  background-color: rgba(242, 242, 244, 1);
-  color: rgba(38, 38, 38, 1);
+  background-color: var(--light-grey-A);
+  color: var(--dark-grey-A);
   height: 32px;
   max-width: 150px;
-  border-radius: 8px;
-  font-family: 'Inter';
-  font-weight: 500;
-  font-size: 14px;
+  border-radius: var(--border-radius-S);
   padding: 0 6px 0 11px;
   text-align: left;
   align-items: center;
@@ -64,9 +91,6 @@
 }
 
 .input {
-  font-family: 'Inter';
-  font-weight: 500;
-  font-size: 14px;
   color: black;
   height: 32px;
   width: 110px;
@@ -80,5 +104,41 @@
   font-family: 'Inter';
   font-weight: 500;
   font-size: 14px;
-  color: rgba(38, 38, 38, 1);
+  color: var(--dark-grey-A);
+}
+
+
+/* dropdown */
+.dropdown {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+  padding: 3px;
+  border: solid 1px var(--light-grey-B);
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  border-top: none;
+  background-color: white;
+  opacity: 1;
+}
+
+.dropdown.hide {
+  opacity: 0;
+}
+
+.dropdown_item {
+  height: 32px;
+  padding: 0 6px;
+  text-align: left;
+  align-content: center;
+  cursor: pointer;
+}
+
+.dropdown_item:last-child {
+  border-radius: 0 0 var(--border-radius-S) var(--border-radius-S);
+}
+
+.dropdown_item:hover {
+  background-color: var(--color-accent-light);
 }
