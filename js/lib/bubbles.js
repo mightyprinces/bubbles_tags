@@ -29,6 +29,7 @@ export default class Bubbles {
         if (ev.repeat) { return }
         if (tagInputEl.value === '' && this.tagsAndInputWrapperEl.firstChild !== tagInputEl) { // проверка что инпут пустой и что во врапере есть элементы кроме инпута, то есть теги
           this.removeTag(this.tagsAndInputWrapperEl.lastChild.previousElementSibling);
+          this.openDropdown();
         }
       }
     })
@@ -43,7 +44,7 @@ export default class Bubbles {
     // появление дропдауна по нажатию на инпут в случае если были удаленные теги
     // создаем элемент dropdown
     this.dropdownEl = document.createElement('ul');
-    this.dropdownEl.classList.add('dropdown', 'hide');
+    this.dropdownEl.classList.add('dropdown');
     wrapperEl.appendChild(this.dropdownEl);
 
     // добавляем в дропдаун удаленные теги из прошлой сессии до перезагрузки страницы
@@ -53,35 +54,17 @@ export default class Bubbles {
 
     // добавляем лисенер на инпут - инпут в фокусе, курсор в инпуте
     tagInputEl.addEventListener('focus', (ev) => {
-      console.log('FOCUS');
-      if (this.deletedTags.length) {
-        this.tagsAndInputWrapperEl.classList.add('dropdowned');
-        this.dropdownEl.classList.remove('hide');
-      }
+      console.log('Input Listener', this.deletedTags.length);
+      this.openDropdown();
     })
+
 
     // добавляем клик по любому месту кроме дропдауна и всей секции с тэгами и инпутом
     window.addEventListener('click', (ev) => {
-      console.log('CLICK');
       if (ev.target !== this.dropdownEl && !this.dropdownEl.contains(ev.target) && ev.target !== tagInputEl) {
         this.tagsAndInputWrapperEl.classList.remove('dropdowned');
-        this.dropdownEl.classList.add('hide');
       }
     })
-
-  }
-
-
-  /**
-   * Удаляет тег из баблса при клике на тег
-   */
-  removeTag(tagEl) {
-    this.deletedTags.push(tagEl.innerText);
-    console.log('deletedTags', this.deletedTags);
-    this.tagsAndInputWrapperEl.removeChild(tagEl);
-    this.tags.splice(this.tags.indexOf(tagEl.textContent), 1);
-    this.addDeletedTagInList(tagEl.innerText);
-    this.tagsChangedHandler(this.tags, this.deletedTags);
   }
 
 
@@ -97,7 +80,6 @@ export default class Bubbles {
     ) return;
 
     if (this.deletedTags.includes(tagValue)) {
-      console.log('inside check - this.deletedTags.includes(tagValue)');
       this.removeDeletedTagFromList(tagValue);
     }
 
@@ -121,6 +103,28 @@ export default class Bubbles {
   }
 
 
+  /**
+   * Удаляет тег из баблса при клике на тег
+   */
+  removeTag(tagEl) {
+    this.deletedTags.push(tagEl.innerText);
+    console.log('this.deletedTags in removeTag', this.deletedTags);
+    this.tagsAndInputWrapperEl.removeChild(tagEl);
+    this.tags.splice(this.tags.indexOf(tagEl.textContent), 1);
+    this.addDeletedTagInList(tagEl.innerText);
+    this.tagsChangedHandler(this.tags, this.deletedTags);
+  }
+
+  /**
+   * Открытие/показ дропдауна
+   */
+  openDropdown() {
+    if (this.deletedTags.length) {
+      this.tagsAndInputWrapperEl.classList.add('dropdowned');
+    }
+  }
+
+
   // добавляем строку в выпадающий список ранее удаленных тегов
   addDeletedTagInList(tagValue) {
     const dropdownItemEl = document.createElement('li');
@@ -130,24 +134,27 @@ export default class Bubbles {
 
     dropdownItemEl.addEventListener('click', () => {
       this.addTag(tagValue);
-      this.removeDeletedTagFromList(tagValue);
     })
   }
 
 
   // удаляем строку из выпадающего списка ранее удаленных тегов
   removeDeletedTagFromList(tagValue) {
-    this.deletedTags.splice(this.deletedTags.indexOf(tagValue), 1);
-    console.log('inside removeDeletedTagFromList');
+    console.log('1-this.deletedTags in removeDeletedTagFromList', this.deletedTags);
+    const tagIndex = this.deletedTags.indexOf(tagValue);
 
+    if (tagIndex === -1) return;
+
+    this.deletedTags.splice(tagIndex, 1);
+    
     let allElements = [...this.dropdownEl.querySelectorAll('.dropdown_item')];
     for (let delTagEl of allElements) {
       if (delTagEl.innerText === tagValue) this.dropdownEl.removeChild(delTagEl);
     }
 
     if (!this.dropdownEl.hasChildNodes()) {
-      this.dropdownEl.classList.add('hide');
       this.tagsAndInputWrapperEl.classList.remove('dropdowned');
     }
+    console.log('2-this.deletedTags in removeDeletedTagFromList', this.deletedTags);
   }
 }

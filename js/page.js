@@ -9,7 +9,7 @@ class Page {
 
     // хендлер должен запускаться когда мы добавляем или удаляем тег
     function tagsChangedHandler(tags, deletedTags) {
-      console.log('Something changed:', tags);
+      // console.log('Something changed:', tags);
       Storage.saveTags(tags);
       Storage.saveDeletedTags(deletedTags);
     }
