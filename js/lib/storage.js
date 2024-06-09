@@ -10,10 +10,10 @@ export default class Storage {
   }
 
   static saveTags(tags) {
-    localStorage.setItem("selected_tags", JSON.stringify(tags));
+    localStorage.setItem("selected_tags", JSON.stringify(Array.from(tags.keys())));
   }
 
   static saveDeletedTags(deletedTags) {
-    localStorage.setItem("deleted_tags", JSON.stringify(deletedTags));
+    localStorage.setItem("deleted_tags", JSON.stringify(Array.from(deletedTags.keys())));
   }
 }

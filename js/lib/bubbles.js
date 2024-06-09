@@ -1,9 +1,10 @@
 export default class Bubbles {
   constructor(wrapperEl, tagsChangedHandler, initTagsArr, initDeletedTagsArr) { // wrapperEl в данном случае это bubbles_wrapper--first из index.html
     this.isReady = false;
-    this.tags = []; // массив текущих тегов
-    this.deletedTags = initDeletedTagsArr; // массив удаленных
+    this.tags = new Map(); // map для текущих тегов
+    this.deletedTags = new Map(); // map для удаленных тегов
     this.tagsChangedHandler = tagsChangedHandler;
+    this.initDeletedTagsArr = initDeletedTagsArr;
     this.createLayout(wrapperEl, initTagsArr); // код запускающий createLayout. wrapperEl в данном случае это bubbles_wrapper--first из index.html
     this.isReady = true;
   }
@@ -48,16 +49,14 @@ export default class Bubbles {
     wrapperEl.appendChild(this.dropdownEl);
 
     // добавляем в дропдаун удаленные теги из прошлой сессии до перезагрузки страницы
-    for (let delTag of this.deletedTags) {
+    for (let delTag of this.initDeletedTagsArr) {
       this.addDeletedTagInList(delTag);
     }
 
     // добавляем лисенер на инпут - инпут в фокусе, курсор в инпуте
     tagInputEl.addEventListener('focus', (ev) => {
-      console.log('Input Listener', this.deletedTags.length);
       this.openDropdown();
     })
-
 
     // добавляем клик по любому месту кроме дропдауна и всей секции с тэгами и инпутом
     window.addEventListener('click', (ev) => {
@@ -76,10 +75,10 @@ export default class Bubbles {
     if (
       !this.tagsAndInputWrapperEl  // проверка что tagsAndInputWrapperEl существует
       || tagValue === ''   // и что мы не создаем пустой тэг, так как tagValue инпута не пустой
-      || this.tags.includes(tagValue)
+      || this.tags.has(tagValue)
     ) return;
 
-    if (this.deletedTags.includes(tagValue)) {
+    if (this.deletedTags.has(tagValue)) {
       this.removeDeletedTagFromList(tagValue);
     }
 
@@ -97,7 +96,7 @@ export default class Bubbles {
     })
     tagEl.appendChild(removeEl);
     this.tagsAndInputWrapperEl.insertBefore(tagEl, this.tagsAndInputWrapperEl.lastChild);
-    this.tags.push(tagValue);
+    this.tags.set(tagValue, tagEl);
 
     if (this.isReady) this.tagsChangedHandler(this.tags, this.deletedTags);
   }
@@ -107,25 +106,26 @@ export default class Bubbles {
    * Удаляет тег из баблса при клике на тег
    */
   removeTag(tagEl) {
-    this.deletedTags.push(tagEl.innerText);
-    console.log('this.deletedTags in removeTag', this.deletedTags);
     this.tagsAndInputWrapperEl.removeChild(tagEl);
-    this.tags.splice(this.tags.indexOf(tagEl.textContent), 1);
+    this.tags.delete(tagEl.innerText);
     this.addDeletedTagInList(tagEl.innerText);
     this.tagsChangedHandler(this.tags, this.deletedTags);
   }
+
 
   /**
    * Открытие/показ дропдауна
    */
   openDropdown() {
-    if (this.deletedTags.length) {
+    if (this.deletedTags.size) {
       this.tagsAndInputWrapperEl.classList.add('dropdowned');
     }
   }
 
 
-  // добавляем строку в выпадающий список ранее удаленных тегов
+  /**
+   * Добавляем строку в выпадающий список ранее удаленных тегов
+   */
   addDeletedTagInList(tagValue) {
     const dropdownItemEl = document.createElement('li');
     dropdownItemEl.classList.add('dropdown_item');
@@ -135,26 +135,22 @@ export default class Bubbles {
     dropdownItemEl.addEventListener('click', () => {
       this.addTag(tagValue);
     })
+
+    this.deletedTags.set(tagValue, dropdownItemEl)
   }
 
 
-  // удаляем строку из выпадающего списка ранее удаленных тегов
+  /*
+  * Удаляем элемент-строку из выпадающего списка ранее удаленных тегов
+  */
   removeDeletedTagFromList(tagValue) {
-    console.log('1-this.deletedTags in removeDeletedTagFromList', this.deletedTags);
-    const tagIndex = this.deletedTags.indexOf(tagValue);
+    if (!this.deletedTags.get(tagValue)) return;
 
-    if (tagIndex === -1) return;
+    this.dropdownEl.removeChild(this.deletedTags.get(tagValue));  // удаляем элемент из дропдауна
+    this.deletedTags.delete(tagValue);  // удаляем запись из мапы
 
-    this.deletedTags.splice(tagIndex, 1);
-    
-    let allElements = [...this.dropdownEl.querySelectorAll('.dropdown_item')];
-    for (let delTagEl of allElements) {
-      if (delTagEl.innerText === tagValue) this.dropdownEl.removeChild(delTagEl);
-    }
-
-    if (!this.dropdownEl.hasChildNodes()) {
+    if (!this.dropdownEl.hasChildNodes()) {  // проверяем что в дропдауне нет элементов и скрываем его
       this.tagsAndInputWrapperEl.classList.remove('dropdowned');
     }
-    console.log('2-this.deletedTags in removeDeletedTagFromList', this.deletedTags);
   }
 }
