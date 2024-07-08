@@ -3,16 +3,31 @@ import Storage from './lib/storage.js';
 
 class Page {
   static init() {
+    const storageFirst = new Storage('first');
+    const storageSecond = new Storage('second');
+
     const bubblesFirstWrapperEl = document.querySelector('.bubbles_wrapper--first');
-    const initTagsArr = Storage.loadTags();
+    const initTagsArrFirst = storageFirst.loadTags();
+    const initDeletedTagsArrFirst = storageFirst.loadDeletedTags();
+
+    const bubblesSecondWrapperEl = document.querySelector('.bubbles_wrapper--second');
+    const initTagsArrSecond = storageSecond.loadTags();
+    const initDeletedTagsArrSecond = storageSecond.loadDeletedTags();
 
     // хендлер должен запускаться когда мы добавляем или удаляем тег
-    function tagsChangedHandler(tags) {
-      console.log('Something changed:', tags);
-      Storage.saveTags(tags);
+    function tagsChangedHandlerFirst(tags, deletedTags) {
+      // console.log('Something changed:', tags);
+      storageFirst.saveTags(tags);
+      storageFirst.saveDeletedTags(deletedTags);
+    }
+    function tagsChangedHandlerSecond(tags, deletedTags) {
+      // console.log('Something changed:', tags);
+      storageSecond.saveTags(tags);
+      storageSecond.saveDeletedTags(deletedTags);
     }
 
-    new Bubbles(bubblesFirstWrapperEl, tagsChangedHandler, initTagsArr);
+    new Bubbles(bubblesFirstWrapperEl, tagsChangedHandlerFirst, initTagsArrFirst, initDeletedTagsArrFirst);
+    new Bubbles(bubblesSecondWrapperEl, tagsChangedHandlerSecond, initTagsArrSecond, initDeletedTagsArrSecond);
   }
 }
 
