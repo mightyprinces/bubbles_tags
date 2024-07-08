@@ -1,19 +1,23 @@
 export default class Storage {
-  static loadTags() {
-    const tags = localStorage.getItem("selected_tags");
+  constructor(prefix) {
+    this.prefix = prefix;
+  }
+
+  loadTags() {
+    const tags = localStorage.getItem(`${this.prefix}_selected_tags`);
     return tags ? JSON.parse(tags) : [];
   }
 
-  static loadDeletedTags() {
-    const deletedTags = localStorage.getItem("deleted_tags");
+  loadDeletedTags() {
+    const deletedTags = localStorage.getItem(`${this.prefix}_deleted_tags`);
     return deletedTags ? JSON.parse(deletedTags) : [];
   }
 
-  static saveTags(tags) {
-    localStorage.setItem("selected_tags", JSON.stringify(Array.from(tags.keys())));
+  saveTags(tags) {
+    localStorage.setItem(`${this.prefix}_selected_tags`, JSON.stringify(Array.from(tags.keys())));
   }
 
-  static saveDeletedTags(deletedTags) {
-    localStorage.setItem("deleted_tags", JSON.stringify(Array.from(deletedTags.keys())));
+  saveDeletedTags(deletedTags) {
+    localStorage.setItem(`${this.prefix}_deleted_tags`, JSON.stringify(Array.from(deletedTags.keys())));
   }
 }

@@ -23,6 +23,11 @@ li {
   list-style-type: none;
 }
 
+h6 {
+  color: #bfbfc0;
+  margin-bottom: 6px;
+}
+
 /* Стили относящиеся к странице */
 .container {
   width: 405px;
@@ -32,8 +37,9 @@ li {
   margin-top: 80px;
 }
 
-.bubbles_wrapper--first {
-  margin-top: 80px;
+.bubbles_wrapper--first,
+.bubbles_wrapper--second {
+  margin-bottom: 40px;
   position: relative;
 }
 
@@ -118,6 +124,7 @@ li {
 .dropdown {
   position: absolute;
   display: none;
+  z-index: 1000;
   flex-direction: column;
   gap: 3px;
   width: 100%;
